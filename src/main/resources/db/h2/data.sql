@@ -1,4 +1,7 @@
-INSERT INTO TBL_EMPLOYEES (first_name, last_name, email) VALUES
-  ('Lokesh', 'Gupta', 'abc@gmail.com'),
-  ('Deja', 'Vu', 'xyz@email.com'),
-  ('Caption', 'America', 'cap@marvel.com');
+INSERT INTO BOOK_CATEGORY (id, name, prefix) VALUES
+  ('A001', '사회', 'sh'),
+  ('A002', '과학', 'gh'),
+  ('A003', '종교', 'jk'),
+  ('A004', '예술', 'ys'),
+  ('A005', '역사', 'ys'),
+  ('A006', '소설', 'ss');
