@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.secjong.instagramclone.category.dao.CategoryDao">
+    <select id="selectCategoryList" resultType="CategoryDto">
+        SELECT
+            id
+            , name
+            , prefix
+        FROM BOOK_CATEGORY
+    </select>
+
+    <select id="selectBookRemainCountGroupByCategory" resultType="CategoryBookRemainCountDto">
+        SELECT
+            B.CATEGORY_ID
+            , (SELECT name FROM BOOK_CATEGORY WHERE id = B.CATEGORY_ID) AS CATEGORY_NAME
+            , SUM(BLS.REMAIN_COUNT) AS BOOK_REMAINS
+        FROM
+            (SELECT LIBRARY_ID, BOOK_ID, REMAIN_COUNT, TOTAL_COUNT FROM BOOK_LIBRARY_STATUS) BLS -- 보유량
+            INNER JOIN (SELECT id, isbn, name, author, rental_fee, category_id FROM BOOK) B -- 책
+            ON BLS.BOOK_ID = B.ID
+            GROUP BY B.CATEGORY_ID
+        ORDER BY BOOK_REMAINS DESC
+    </select>
+</mapper>
