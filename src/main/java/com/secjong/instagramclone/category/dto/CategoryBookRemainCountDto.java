@@ -1,8 +1,5 @@
 package com.secjong.instagramclone.category.dto;
 
-import org.apache.ibatis.type.Alias;
-
-@Alias("CategoryBookRemainCountDto")
 public class CategoryBookRemainCountDto {
     private String categoryId;
     private String categoryName;

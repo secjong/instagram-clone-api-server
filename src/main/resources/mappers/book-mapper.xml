@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.secjong.instagramclone.book.dao.BookDao">
+
+    <!--  도서 기준으로 각 도서관 별 보유 및 대여 현황 조회  -->
+    <select id="selectLibraryRemainRentalCount" parameterType="String" resultType="LibraryRemainRentalCountDto">
+        SELECT
+            l.id AS library_id
+            , l.name AS library_name
+            , bls.remain_count AS remain_count
+            , (
+                SELECT COUNT(book_id)
+                FROM book_rental_history
+                WHERE return_yn = 'N'
+                AND library_id = l.id
+                AND book_id = b.id
+            ) AS rental_count
+        FROM book b
+        INNER JOIN book_library_status bls
+        ON b.id = bls.book_id
+        INNER JOIN library l
+        ON bls.library_id = l.id
+        WHERE b.name = #{bookName}
+    </select>
+</mapper>

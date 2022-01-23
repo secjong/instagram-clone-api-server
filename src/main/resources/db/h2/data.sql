@@ -55,3 +55,15 @@ INSERT INTO BOOK_LIBRARY_STATUS (library_id, book_id, remain_count, total_count)
     ('L004', 'SS_B009', 20, 20),
     ('L004', 'GH_B010', 40, 40);
 
+-- 도서대여
+INSERT INTO BOOK_RENTAL_HISTORY (library_id, book_id, client, return_yn) VALUES
+    ('L002', 'GH_B001', '채세종', 'N'),
+    ('L002', 'GH_B010', '채세종', 'N'),
+    ('L002', 'SS_B009', '채세종', 'N'),
+    ('L004', 'GH_B003', '채세종', 'Y'),
+    ('L004', 'SS_B006', '채세종', 'Y'),
+
+    ('L003', 'GH_B010', '홍길동', 'Y'),
+    ('L003', 'GH_B005', '홍길동', 'Y'),
+    ('L001', 'SS_B009', '홍길동', 'N');
+

@@ -20,7 +20,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<CategoryBookRemainCountDto> getBookRemainCountGroupByCategory() {
-        return categoryDao.selectBookRemainCountGroupByCategory();
+    public List<CategoryBookRemainCountDto> getBookRemainCountGroupByCategory(String libraryId) {
+        return categoryDao.selectBookRemainCountGroupByCategory(libraryId);
     }
 }

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.secjong.instagramclone.rental.dao.RentalDao">
+    <select id="selectClientRentalCountRank" resultType="ClientRentalCountRankDto">
+        SELECT
+            ROWNUM AS rank
+            , client
+            , count
+        FROM (
+            SELECT
+                client
+                , COUNT(book_id) AS count
+            FROM book_rental_history
+            GROUP BY client
+            ORDER BY count DESC
+        )
+
+    </select>
+    <select id="selectClientRentalCountCategory" resultType="ClientRentalCountCategoryDto">
+        SELECT
+            brh.client
+            , bc_b.category_id
+            , bc_b.category_name
+            , COUNT(bc_b.book_id) AS count
+        FROM (
+            SELECT
+                bc.id AS category_id
+                , bc.name as category_name
+                , b.id AS book_id
+            FROM book_category bc
+            INNER JOIN book b
+            ON bc.id = b.category_id
+        ) bc_b
+        INNER JOIN book_rental_history brh
+        ON bc_b.book_id = brh.book_id
+        GROUP BY brh.client, bc_b.category_id, bc_b.category_name
+    </select>
+    <select id="selectClientRentalCountLibrary" resultType="ClientRentalCountLibraryDto">
+        SELECT
+            brh_l.client
+            , brh_l.library_id
+            , brh_l.library_name
+            , COUNT(b.id) AS count
+        FROM (
+            SELECT
+                brh.client
+                , brh.book_id
+                , l.id AS library_id
+                , l.name AS library_name
+            FROM book_rental_history brh
+            INNER JOIN library l
+            ON brh.library_id = l.id
+        ) brh_l
+        INNER JOIN book b
+        ON brh_l.book_id = b.id
+        GROUP BY brh_l.client, brh_l.library_id, brh_l.library_name
+    </select>
+    <!--
+      1. book_library_status 에서 remain_count 감소
+      2. book_rental_history 에 return_yn 'N' 으로 대여이력 삽입
+      3. book 에서 book_id 로 rental_fee 조회해서 sum
+      -->
+    <update id="updateBookLibraryStatus" parameterType="RentalRequestDto">
+        UPDATE book_library_status
+        SET remain_count = (SELECT remain_count - 1 FROM book_library_status WHERE library_id = #{libraryId} AND book_id = #{bookId})
+        WHERE library_id = #{libraryId} AND book_id = #{bookId}
+    </update>
+
+    <insert id="insertBookRentalHistory" parameterType="RentalRequestDto">
+        INSERT INTO book_rental_history (library_id, book_id, client, return_yn)
+        VALUES (#{libraryId}, #{bookId}, #{client}, 'N')
+    </insert>
+    
+    <select id="selectRentalFee" parameterType="String" resultType="int">
+        SELECT rental_fee
+        FROM book
+        WHERE id = #{bookId}
+    </select>
+
+
+</mapper>

@@ -10,5 +10,5 @@ import java.util.List;
 public interface CategoryDao {
     public List<CategoryDto> selectCategoryList ();
 
-    public List<CategoryBookRemainCountDto> selectBookRemainCountGroupByCategory ();
+    public List<CategoryBookRemainCountDto> selectBookRemainCountGroupByCategory (String libraryId);
 }

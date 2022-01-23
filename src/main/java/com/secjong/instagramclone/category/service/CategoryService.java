@@ -9,5 +9,5 @@ public interface CategoryService {
 
     public List<CategoryDto> getCategory ();
 
-    public List<CategoryBookRemainCountDto> getBookRemainCountGroupByCategory ();
+    public List<CategoryBookRemainCountDto> getBookRemainCountGroupByCategory (String libraryId);
 }
