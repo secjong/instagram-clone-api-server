@@ -31,3 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
+/out/artifacts/instagram_clone_jar/instagram-clone.jar
+/src/main/resources/META-INF/MANIFEST.MF

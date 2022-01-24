@@ -41,7 +41,7 @@ public class RentalController {
 
     @PostMapping("")
     public ResponseEntity rentalBook (@RequestBody(required = true) List<RentalRequestDto> list) {
-        list.stream().forEach(item -> System.out.println(item.getBookId()));
+//        list.stream().forEach(item -> System.out.println(item.getBookId()));
         int rentalFeeSum = rentalService.rentalBook(list);
         Map<String, Integer> map = new HashMap<String, Integer>();
         map.put("rentalFeeSum", rentalFeeSum);

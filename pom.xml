@@ -11,6 +11,7 @@
 	<groupId>com.secjong</groupId>
 	<artifactId>instagram-clone</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>instagram-clone</name>
 	<description>Instagram Clone Project API Server</description>
 	<properties>
@@ -51,6 +52,12 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
 	</dependencies>
 
 	<build>
